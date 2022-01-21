@@ -1,9 +1,8 @@
 
 class Movie:
-    def __init__(self, rank: int, title: str, year: int, imdb_rating: float, num_of_votes: int, num_of_won_oscars: int):
+    def __init__(self, rank: int, title: str, imdb_rating: float, num_of_votes: int, num_of_won_oscars: int):
         self.rank = rank
         self.title = title
-        self.year = year
         self.imdb_rating = imdb_rating
         self.num_of_votes = num_of_votes
         self.num_of_won_oscars = num_of_won_oscars
