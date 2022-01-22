@@ -1,6 +1,6 @@
 import pandas as pd
 
-from imdb_scraper import Movie
+from imdb_scraper.imdb.movie import Movie
 
 
 def write_to_csv_with_original_rating(movies: [Movie], output_path: str):

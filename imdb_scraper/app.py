@@ -1,9 +1,11 @@
+import os
 import time
 import requests
-import utils as utils
-from imdb_scraper import IMDBTop20Scraper, WebpageDownloader, IMDBPageParser
+import imdb_scraper.utils as utils
+from imdb_scraper.imdb import IMDBTop20Scraper, WebpageDownloader
+import os
 
-OUTPUT_FOLDER_PATH = 'out/'
+OUTPUT_FOLDER_PATH = os.getcwd() + '/out/'
 
 
 def run():
@@ -11,8 +13,8 @@ def run():
 
     with requests.Session() as session:
         page_downloader = WebpageDownloader(session=session)
-        scraper = IMDBTop20Scraper(page_downloader=page_downloader)
-        movies = scraper.scrape_top_movies()
+        top20_scraper = IMDBTop20Scraper(page_downloader=page_downloader)
+        movies = top20_scraper.scrape()
 
     elapsed_time = time.process_time() - t
     print('Elapsed: ' + str(elapsed_time))
