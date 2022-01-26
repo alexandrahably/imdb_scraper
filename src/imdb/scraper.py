@@ -1,7 +1,7 @@
 import requests
 
-from src.imdb.parsers import IMDBTop250PageParser, IMDBTitlePageParser
 from src.imdb.movie import Movie
+from src.imdb.parsers import IMDBTop250PageParser, IMDBTitlePageParser
 from src.imdb.webpage_downloader import fetch_page_as_text, fetch_pages_as_text
 
 
@@ -12,20 +12,18 @@ class IMDBTop20Scraper:
 
     TOP_SELECTION_NUMBER = 20  # The top250 page can return max 250 movies from the top.
 
-    def __init__(self,
-                 top250_page_parser: IMDBTop250PageParser = IMDBTop250PageParser(TOP_SELECTION_NUMBER),
-                 title_page_parser: IMDBTitlePageParser = IMDBTitlePageParser()):
-        self.top250_page_parser = top250_page_parser
-        self.title_page_parser = title_page_parser
+    def __init__(self):
+        self.top250_page_parser = IMDBTop250PageParser(IMDBTop20Scraper.TOP_SELECTION_NUMBER)
+        self.title_page_parser = IMDBTitlePageParser()
+        self.session = requests.session()
 
     def __enter__(self):
-        self.session = requests.session()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.session.close()
 
-    def scrape(self) -> [Movie]:
+    def scrape(self):
 
         # Downloading movie main info
         top250_page_text = fetch_page_as_text(self.session, IMDBTop250PageParser.URL)

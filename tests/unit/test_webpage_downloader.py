@@ -22,7 +22,7 @@ def mock_session_response(status=200, content="CONTENT", text_data=None, raise_f
 
 class TestWebpageDownloader(unittest.TestCase):
 
-    @mock.patch('src.imdb.webpage_downloader.requests.session', autospec=True)
+    @mock.patch('src.imdb.webpage_downloader.requests.session')
     def test_fetch_page_as_text_when_IMDB_is_up(self, session_mock):
         session_mock.return_value = mock_session_response(text_data="hey")
 
@@ -33,7 +33,7 @@ class TestWebpageDownloader(unittest.TestCase):
         self.assertEqual(session_mock.return_value.get.return_value.raise_for_status.called, True,
                          "Raise for status was called")
 
-    @mock.patch('src.imdb.webpage_downloader.requests.session', autospec=True)
+    @mock.patch('src.imdb.webpage_downloader.requests.session')
     def test_fetch_page_as_text_when_IMDB_is_down(self, session_mock):
         session_mock.return_value = mock_session_response(status=500, raise_for_status=HTTPError("IMDB is down"))
         self.assertRaises(HTTPError, fetch_page_as_text, session_mock(), "test url")

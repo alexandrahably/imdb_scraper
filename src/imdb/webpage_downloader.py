@@ -11,7 +11,7 @@ def fetch_page_as_text(session: requests.Session, page_url: str) -> str:
     return response.text
 
 
-def fetch_pages_as_text(session: requests.Session, base_url: str, relative_paths: [str]) -> [str]:
+def fetch_pages_as_text(session: requests.Session, base_url: str, relative_paths: list[str]) -> list[str]:
     """Downloads multiple pages concurrently, and returns the downloaded pages as text.
     The order of urls & requests is stable.
     """

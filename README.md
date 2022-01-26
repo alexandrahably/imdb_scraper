@@ -1,6 +1,6 @@
 # IMDB Scraper
 
-This app scrapes the IMDBs website to retrieve the top 20 movies. 
+This app scrapes IMDB's website to retrieve the top 20 movies. 
 
 It can be run locally and by using Docker. 
 
@@ -10,7 +10,8 @@ It can be run locally and by using Docker.
 Run the following command from the project root:
 
 ```bash
-python src/app.py
+pip3 install -r ./requirements.txt
+python3 -m src.app
 ```
 
 
