@@ -1,7 +1,11 @@
 # IMDB Scraper
 
-This app scrapes IMDB's website to retrieve the top 20 movies. 
-
+This app scrapes IMDB's website to retrieve the top 20 movies, and saves them in a descending order to csv files, based on:
+- their original IMDB rating
+- an adjusted rating, that takes into account: 
+  - the number of won Oscars (if there are any) as rewards and 
+  - the number of the received votes (if it is remarkably small) as penalties 
+    
 It can be run locally and by using Docker. 
 
 

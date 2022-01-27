@@ -24,6 +24,12 @@ class IMDBTop20Scraper:
         self.session.close()
 
     def scrape(self):
+        """
+        Downloads the top 20 movies from the IMDB top chart, and retrieves the title,
+        number of votes, IMDB rating and number of Oscars for each of the movies.
+            Returns:
+                movies (list[Movie]): A list of movies that are part of the top 20 list on IMDB's top chart
+        """
 
         # Downloading movie main info
         top250_page_text = fetch_page_as_text(self.session, IMDBTop250PageParser.URL)
