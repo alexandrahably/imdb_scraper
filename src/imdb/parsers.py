@@ -24,9 +24,13 @@ class IMDBTop250PageParser:
                    .split(' based on ')[1]
                    .replace(',', ''))
 
-    # Parse the rank, title, link, rating and number of votes for the specified number of
-    # top movies from the IMDB TOP 250 list (specified number <= 250)
     def parse(self, top250_movies_page_text: str):
+        """
+        Parse the rank, title, link, rating and number of votes for the specified number of
+        top movies from the IMDB TOP 250 list (specified number <= 250)
+        :param top250_movies_page_text: text of the IMDB top 250 web page
+        :return: the ranks, titles, relative_links, ratings, votes for the top selection number of movies
+        """
 
         soup = BeautifulSoup(top250_movies_page_text, 'lxml')
 
@@ -52,9 +56,13 @@ class IMDBTitlePageParser:
 
     BASE_URL = 'https://www.imdb.com'
 
-    # Parse the number of Oscars
     @staticmethod
     def parse_num_of_won_oscars_from_movie_page(movie_details_page_text: str) -> int:
+        """
+        Parse the number of Oscars
+        :param movie_details_page_text: The movie tile page of the movie that we want to examine for how many Oscars it received
+        :return: number of Oscars the movie has received
+        """
         soup = BeautifulSoup(movie_details_page_text, 'lxml')
         # Find the awards section
         soup_query = 'section[cel_widget_id="StaticFeature_Awards"] a[class="ipc-metadata-list-item__label ipc-metadata-list-item__label--link"]'
@@ -67,12 +75,15 @@ class IMDBTitlePageParser:
         if awards is not None and "Won" in awards and "Oscar" in awards:
             oscars_count = int(awards.removeprefix("Won").removesuffix("s").removesuffix("Oscar").strip())
             return oscars_count
-        else:
-            return 0
+        return 0
 
-    # Find the number of Oscars
     @staticmethod
     def parse_num_of_won_oscars_from_movie_pages(movie_details_page_texts: [str]) -> [int]:
-        pool = mp.Pool(mp.cpu_count())
-        num_of_oscars = pool.map(IMDBTitlePageParser.parse_num_of_won_oscars_from_movie_page, movie_details_page_texts)
+        """
+        Find the number of Oscars
+        :param movie_details_page_texts: Title page texts of the movies we want to examine
+        :return: the number of Oscars the movie received for each of the movies
+        """
+        with mp.Pool(mp.cpu_count()) as pool:
+            num_of_oscars = pool.map(IMDBTitlePageParser.parse_num_of_won_oscars_from_movie_page, movie_details_page_texts)
         return num_of_oscars
